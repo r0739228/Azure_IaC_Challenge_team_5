@@ -1,0 +1,42 @@
+---
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Power Off
+    azure_rm_virtualmachine:
+      ad_user: r0739228@student.thomasmore.be
+      password: *****
+      subscription_id: e3423abf-8f89-4844-a758-93f4da16fd91
+      resource_group: RG_Jenkins
+      name: myVM
+      started: no
+  - name: Remove VM
+    azure_rm_virtualmachine:
+      ad_user: r0739228@student.thomasmore.be
+      password: *****
+      subscription_id: e3423abf-8f89-4844-a758-93f4da16fd91
+      resource_group: RG_Jenkins
+      name: myVM
+      remove_on_absent: all_autocreated
+      state: absent
+  - name: Create VM
+    azure_rm_virtualmachine:
+      ad_user: r0739228@student.thomasmore.be
+      password: *****
+      subscription_id: e3423abf-8f89-4844-a758-93f4da16fd91
+      resource_group: RG_Jenkins
+      name: myVM
+      vm_size: Standard_B1s
+      admin_username: azureuser
+      ssh_password_enabled: true
+#      ssh_public_keys:
+#        - path: /home/azureuser/.ssh/authorized_keys
+#          key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJZCf+XP+GrlWCpNYNoyKlXZr+TCNbUyLNxYPOGC5yk4VS5YjG34bFsGaZysvtUK9Gx3GW3BuOyu3iH+fREOa3dK2ZHjzyiJv$
+      admin_password: ****
+      network_interfaces: myNIC
+      image:
+        offer: CentOS
+        publisher: OpenLogic
+        sku: '7.5'
+        version: latest

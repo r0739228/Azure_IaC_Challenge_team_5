@@ -1,0 +1,15 @@
+---
+- name: Connection to host
+  hosts: 10.0.0.6
+  remote_user: azureuser
+  become: true
+  become_method: sudo
+  become_user: root
+  tasks:
+  - name: Copy files
+    copy:
+      src: /var/lib/jenkins/workspace/Pull Git/application/
+      dest: /var/www/html/
+      owner: azureuser
+      group: azureuser
+      mode: 0755
